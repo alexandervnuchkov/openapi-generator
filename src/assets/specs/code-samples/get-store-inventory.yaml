@@ -1,0 +1,39 @@
+- lang: shell
+  label: 'cURL'
+  source: |
+    curl -X GET 'https://petstore.swagger.io/v2/store/inventory' \
+         -H 'Authorization: ApiKey PlaceYourRealApiKey_Here'
+- lang: python
+  label: 'Python: Requests'
+  source: |
+    import requests
+
+    url = "https://petstore.swagger.io/v2/store/inventory"
+    headers = {
+      'Authorization': 'ApiKey PlaceYourRealApiKey_Here'
+    }
+    response = requests.get(url, headers=headers)
+
+    print(response.text)
+- lang: js
+  label: 'Nodejs'
+  source: |
+    var request = require('request');
+    var options = {
+      'method': 'GET',
+      'url': 'https://petstore.swagger.io/v2/store/inventory',
+      'headers': {
+        'Authorization': 'ApiKey PlaceYourRealApiKey_Here'
+      }
+    };
+    request(options, function (error, response) {
+      if (error) throw new Error(error);
+      console.log(response.body);
+    });
+- lang: java
+  label: Java
+  source: |
+    Unirest.setTimeouts(0, 0);
+    HttpResponse<String> response = Unirest.get("https://petstore.swagger.io/v2/store/inventory")
+      .header("Authorization", "ApiKey PlaceYourRealApiKey_Here")
+      .asString();
