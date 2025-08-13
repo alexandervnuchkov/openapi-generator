@@ -1,6 +1,6 @@
 # RapiDoc
 
-This is my deeply customized RapiDoc version for Open-API spec viewing.
+This is my deeply customized [RapiDoc](https://github.com/rapi-doc/RapiDoc) version for Open-API spec viewing.
 
 ## Documentation
 
