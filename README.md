@@ -2,6 +2,8 @@
 
 This is my deeply customized [RapiDoc](https://github.com/rapi-doc/RapiDoc) version for Open-API spec viewing.
 
+View it deployed to [GitHub pages](https://alexandervnuchkov.github.io/openapi-generator).
+
 ## Documentation
 
 [Check out the usage and demos](https://mrin9.github.io/RapiDoc/)
