@@ -2,10 +2,11 @@ openapi: 3.0.3
 servers:
   - url: https://petstore.swagger.io/v2
 info:
-  description: 'This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.'
+  description: 'Это пример сервера Petstore. Вы можете узнать больше о Swagger на [http://swagger.io](http://swagger.io) или на [irc.freenode.net, #swagger](http://swagger.io/irc/). Для этого примера вы можете использовать api key `special-key` для тестирования фильтров авторизации.'
   version: 1.0.0
   title: Swagger Petstore
   termsOfService: 'http://swagger.io/terms/'
+  # Условия использования
   contact:
     email: apiteam@swagger.io
   license:
@@ -13,33 +14,40 @@ info:
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 tags:
   - name: pet
-    description: Everything about your Pets
+    description: Всё о ваших питомцах
     externalDocs:
-      description: Find out more
+      description: Узнать больше
       url: 'http://swagger.io'
   - name: store
-    description: Access to Petstore orders
+    description: Доступ к заказам Petstore
   - name: user
-    description: Operations about user
+    description: Операции с пользователями
     externalDocs:
-      description: Find out more about our store
+      description: Узнать больше о нашем магазине
       url: 'http://swagger.io'
 paths:
   /pet:
     post:
       tags:
         - pet
-      summary: Add a new pet to the store
-      description: ''
+      summary: Добавить нового питомца в магазин
+      description: 'Добавляет нового питомца в систему магазина. Требует полных данных о питомце.'
       operationId: addPet
+      x-code-samples:
+        $ref: ./code-samples/post-pet.yaml
       responses:
         '200':
+          description: Успешное добавление питомца
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Pet'
+              example:
+                id: 10
+                name: "doggie"
+                status: "available"
         '405':
-          description: Invalid input
+          description: Некорректные входные данные
       security:
         - petstore_auth:
             - 'write:pets'
@@ -49,9 +57,11 @@ paths:
     put:
       tags:
         - pet
-      summary: Update an existing pet
-      description: ''
+      summary: Обновить существующего питомца
+      description: 'Обновляет данные существующего питомца. Требует полного объекта питомца.'
       operationId: updatePet
+      x-code-samples:
+        $ref: ./code-samples/put-pet.yaml
       responses:
         '200':
           content:
@@ -59,11 +69,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/Pet'
         '400':
-          description: Invalid ID supplied
+          description: Некорректный ID
         '404':
-          description: Pet not found
+          description: Питомец не найден
         '405':
-          description: Validation exception
+          description: Ошибка валидации
       security:
         - petstore_auth:
             - 'write:pets'
@@ -74,13 +84,15 @@ paths:
     get:
       tags:
         - pet
-      summary: Finds Pets by status
-      description: Multiple status values can be provided with comma separated strings
+      summary: Найти питомцев по статусу
+      description: 'Возвращает список питомцев по указанным статусам. Допустимые статусы: available, pending, sold'
       operationId: findPetsByStatus
+      x-code-samples:
+        $ref: ./code-samples/get-pet-findByStatus.yaml
       parameters:
         - name: status
           in: query
-          description: Status values that need to be considered for filter
+          description: Статусы для фильтрации (разделяются запятыми)
           required: true
           explode: true
           schema:
@@ -94,7 +106,7 @@ paths:
               default: available
       responses:
         '200':
-          description: successful operation
+          description: Успешная операция
           content:
             application/xml:
               schema:
@@ -106,8 +118,15 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Pet'
+              example:
+                - id: 1
+                  name: "Cat 1"
+                  status: "available"
+                - id: 2
+                  name: "Dog 1"
+                  status: "pending"
         '400':
-          description: Invalid status value
+          description: Некорректное значение статуса
       security:
         - petstore_auth:
             - 'write:pets'
@@ -116,13 +135,15 @@ paths:
     get:
       tags:
         - pet
-      summary: Finds Pets by tags
-      description: 'Muliple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.'
+      summary: Найти питомцев по тегам
+      description: 'Возвращает список питомцев по указанным тегам. Теги разделяются запятыми.'
       operationId: findPetsByTags
+      x-code-samples:
+        $ref: ./code-samples/get-pet-findByTags.yaml
       parameters:
         - name: tags
           in: query
-          description: Tags to filter by
+          description: Теги для фильтрации (разделяются запятыми)
           required: true
           explode: true
           schema:
@@ -138,7 +159,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Pet'
         '400':
-          description: Invalid tag value
+          description: Некорректное значение тега
       security:
         - petstore_auth:
             - 'write:pets'
@@ -148,20 +169,22 @@ paths:
     get:
       tags:
         - pet
-      summary: Find pet by ID
-      description: Returns a single pet
+      summary: Найти питомца по ID
+      description: 'Возвращает данные одного питомца по его уникальному идентификатору'
       operationId: getPetById
+      x-code-samples:
+        $ref: ./code-samples/get-pet-petId.yaml
       parameters:
         - name: petId
           in: path
-          description: ID of pet to return
+          description: ID возвращаемого питомца
           required: true
           schema:
             type: integer
             format: int64
       responses:
         '200':
-          description: successful operation
+          description: Успешная операция
           content:
             application/xml:
               schema:
@@ -170,21 +193,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/Pet'
         '400':
-          description: Invalid ID supplied
+          description: Некорректный ID
         '404':
-          description: Pet not found
+          description: Питомец не найден
       security:
         - api_key: []
     post:
       tags:
         - pet
-      summary: Updates a pet in the store with form data
-      description: ''
+      summary: Обновить питомца через форму
+      description: 'Обновляет имя и статус питомца с помощью данных формы'
       operationId: updatePetWithForm
+      x-code-samples:
+        $ref: ./code-samples/post-pet-petId.yaml
       parameters:
         - name: petId
           in: path
-          description: ID of pet that needs to be updated
+          description: ID обновляемого питомца
           required: true
           schema:
             type: integer
@@ -193,7 +218,7 @@ paths:
         '200':
           description: OK
         '405':
-          description: Invalid input
+          description: Некорректные входные данные
       security:
         - petstore_auth:
             - 'write:pets'
@@ -213,9 +238,11 @@ paths:
     delete:
       tags:
         - pet
-      summary: Deletes a pet
-      description: ''
+      summary: Удалить питомца
+      description: 'Удаляет питомца по его идентификатору. Требует аутентификации.'
       operationId: deletePet
+      x-code-samples:
+        $ref: ./code-samples/delete-pet-petId.yaml
       parameters:
         - name: api_key
           in: header
@@ -224,7 +251,7 @@ paths:
             type: string
         - name: petId
           in: path
-          description: Pet id to delete
+          description: ID удаляемого питомца
           required: true
           schema:
             type: integer
@@ -233,9 +260,9 @@ paths:
         '200':
           description: OK
         '400':
-          description: Invalid ID supplied
+          description: Некорректный ID
         '404':
-          description: Pet not found
+          description: Питомец не найден
       security:
         - petstore_auth:
             - 'write:pets'
@@ -244,20 +271,22 @@ paths:
     post:
       tags:
         - pet
-      summary: Uploads an image
-      description: ''
+      summary: Загрузить изображение
+      description: 'Загружает изображение для указанного питомца'
       operationId: uploadFile
+      x-code-samples:
+        $ref: ./code-samples/post-pet-petId-uploadImage.yaml
       parameters:
         - name: petId
           in: path
-          description: ID of pet to update
+          description: ID обновляемого питомца
           required: true
           schema:
             type: integer
             format: int64
       responses:
         '200':
-          description: successful operation
+          description: Успешная операция
           content:
             application/json:
               schema:
@@ -273,26 +302,30 @@ paths:
               type: object
               properties:
                 additionalMetadata:
-                  description: Additional data to pass to server
+                  description: Дополнительные метаданные для сервера
                   type: string
                 file:
-                  description: file to upload
+                  description: Файл для загрузки
                   type: string
                   format: binary
   /store/inventory:
     get:
       tags:
         - store
-      summary: Returns pet inventories by status
-      description: Returns a map of status codes to quantities
+      summary: Получить инвентарь по статусам
+      description: 'Возвращает количество питомцев по каждому статусу (только для администраторов)'
       operationId: getInventory
       responses:
         '200':
-          description: successful operation
+          description: Успешная операция
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Inventory'
+              example:
+                available: 5
+                pending: 2
+                sold: 10
       x-code-samples:
         $ref: ./code-samples/get-store-inventory.yaml
       security:
@@ -301,12 +334,14 @@ paths:
     post:
       tags:
         - store
-      summary: Place an order for a pet
-      description: ''
+      summary: Создать заказ на питомца
+      description: 'Размещает новый заказ на покупку питомца'
       operationId: placeOrder
+      x-code-samples:
+        $ref: ./code-samples/post-store-order.yaml
       responses:
         '200':
-          description: successful operation
+          description: Успешная операция
           content:
             application/xml:
               schema:
@@ -314,26 +349,35 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Order'
+              example:
+                id: 10
+                petId: 198772
+                quantity: 1
+                shipDate: "2025-08-16T15:00:00Z"
+                status: "placed"
+                complete: false
         '400':
-          description: Invalid Order
+          description: Некорректный заказ
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Order'
-        description: order placed for purchasing the pet
+        description: Заказ на покупку питомца
         required: true
   '/store/order/{orderId}':
     get:
       tags:
         - store
-      summary: Find purchase order by ID
-      description: For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+      summary: Найти заказ по ID
+      description: 'Возвращает данные заказа по его идентификатору. Допустимые ID: от 1 до 10'
       operationId: getOrderById
+      x-code-samples:
+        $ref: ./code-samples/get-store-order-orderId.yaml
       parameters:
         - name: orderId
           in: path
-          description: ID of pet that needs to be fetched
+          description: ID получаемого заказа
           required: true
           schema:
             type: integer
@@ -342,7 +386,7 @@ paths:
             maximum: 10
       responses:
         '200':
-          description: successful operation
+          description: Успешная операция
           content:
             application/xml:
               schema:
@@ -351,19 +395,21 @@ paths:
               schema:
                 $ref: '#/components/schemas/Order'
         '400':
-          description: Invalid ID supplied
+          description: Некорректный ID
         '404':
-          description: Order not found
+          description: Заказ не найден
     delete:
       tags:
         - store
-      summary: Delete purchase order by ID
-      description: For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+      summary: Удалить заказ по ID
+      description: 'Удаляет заказ по его идентификатору. Допустимы только положительные целые числа'
       operationId: deleteOrder
+      x-code-samples:
+        $ref: ./code-samples/delete-store-order-orderId.yaml
       parameters:
         - name: orderId
           in: path
-          description: ID of the order that needs to be deleted
+          description: ID удаляемого заказа
           required: true
           schema:
             type: integer
@@ -373,11 +419,11 @@ paths:
         '200':
           description: OK
         '400':
-          description: Invalid ID supplied
+          description: Некорректный ID
         '404':
-          description: Order not found
+          description: Заказ не найден
 externalDocs:
-  description: Find out more about Swagger
+  description: Узнать больше о Swagger
   url: 'http://swagger.io'
 components:
   responses:
@@ -427,8 +473,8 @@ components:
         implicit:
           authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
           scopes:
-            'write:pets': modify pets in your account
-            'read:pets': read your pets
+            'write:pets': изменение питомцев в вашем аккаунте
+            'read:pets': чтение ваших питомцев
     api_key:
       type: apiKey
       name: api_key
@@ -440,18 +486,22 @@ components:
         id:
           type: integer
           format: int64
+          description: Уникальный идентификатор заказа
         petId:
           type: integer
           format: int64
+          description: Идентификатор заказанного питомца
         quantity:
           type: integer
           format: int32
+          description: Количество заказанных единиц
         shipDate:
           type: string
           format: date-time
+          description: Дата и время отправки заказа
         status:
           type: string
-          description: Order Status
+          description: Статус заказа
           enum:
             - placed
             - approved
@@ -459,6 +509,7 @@ components:
         complete:
           type: boolean
           default: false
+          description: Флаг завершенности заказа
       xml:
         name: Order
     User:
@@ -467,22 +518,29 @@ components:
         id:
           type: integer
           format: int64
+          description: Уникальный идентификатор пользователя
         username:
           type: string
+          description: Логин пользователя
         firstName:
           type: string
+          description: Имя пользователя
         lastName:
           type: string
+          description: Фамилия пользователя
         email:
           type: string
+          description: Email пользователя
         password:
           type: string
+          description: Пароль пользователя
         phone:
           type: string
+          description: Телефон пользователя
         userStatus:
           type: integer
           format: int32
-          description: User Status
+          description: Статус пользователя (1-активный, 0-неактивный)
       xml:
         name: User
     Category:
@@ -493,6 +551,7 @@ components:
           format: int64
         name:
           type: string
+          description: Название категории
       xml:
         name: Category
     Tag:
@@ -514,11 +573,14 @@ components:
         id:
           type: integer
           format: int64
+          description: Уникальный идентификатор питомца
         category:
           $ref: '#/components/schemas/Category'
+          description: Категория питомца
         name:
           type: string
           example: doggie
+          description: Имя питомца
         photoUrls:
           type: array
           xml:
@@ -526,6 +588,7 @@ components:
             wrapped: true
           items:
             type: string
+          description: Ссылки на фотографии питомца
         tags:
           type: array
           xml:
@@ -533,9 +596,10 @@ components:
             wrapped: true
           items:
             $ref: '#/components/schemas/Tag'
+          description: Теги питомца
         status:
           type: string
-          description: pet status in the store
+          description: Статус питомца в магазине
           enum:
             - available
             - pending
@@ -544,20 +608,34 @@ components:
         name: Pet
     Inventory:
       type: object
+      description: Инвентарь питомцев по статусам
       properties:
-        additionalProperty:
+        available:
           type: integer
           format: int32
+          description: Количество доступных питомцев
+        pending:
+          type: integer
+          format: int32
+          description: Количество ожидающих питомцев
+        sold:
+          type: integer
+          format: int32
+          description: Количество проданных питомцев
     ApiResponse:
       type: object
+      description: Ответ API
       properties:
         code:
           type: integer
           format: int32
+          description: Код ответа
         type:
           type: string
+          description: Тип ответа
         message:
           type: string
+          description: Сообщение ответа
   examples:
     Order:
       value:

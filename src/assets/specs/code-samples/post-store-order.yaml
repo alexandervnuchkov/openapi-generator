@@ -1,0 +1,73 @@
+- lang: shell
+  label: 'cURL'
+  source: |
+    curl -X POST 'https://petstore.swagger.io/v2/store/order' \
+         -H 'Content-Type: application/json' \
+         -H 'Authorization: ApiKey YOUR_API_KEY' \
+         -d '{
+           "id": 10,
+           "petId": 198772,
+           "quantity": 1,
+           "shipDate": "2025-08-16T15:00:00Z",
+           "status": "placed",
+           "complete": false
+         }'
+
+- lang: python
+  label: 'Python: Requests'
+  source: |
+    import requests
+
+    url = "https://petstore.swagger.io/v2/store/order"
+    headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'ApiKey YOUR_API_KEY'
+    }
+    data = {
+      "id": 10,
+      "petId": 198772,
+      "quantity": 1,
+      "shipDate": "2025-08-16T15:00:00Z",
+      "status": "placed",
+      "complete": false
+    }
+    response = requests.post(url, headers=headers, json=data)
+
+    print(response.text)
+
+- lang: js
+  label: 'Nodejs'
+  source: |
+    var request = require('request');
+
+    var options = {
+      'method': 'POST',
+      'url': 'https://petstore.swagger.io/v2/store/order',
+      'headers': {
+        'Content-Type': 'application/json',
+        'Authorization': 'ApiKey YOUR_API_KEY'
+      },
+      body: JSON.stringify({
+        "id": 10,
+        "petId": 198772,
+        "quantity": 1,
+        "shipDate": "2025-08-16T15:00:00Z",
+        "status": "placed",
+        "complete": false
+      })
+    };
+
+    request(options, function (error, response) {
+      if (error) throw new Error(error);
+      console.log(response.body);
+    });
+
+- lang: java
+  label: Java
+  source: |
+    Unirest.setTimeouts(0, 0);
+    HttpResponse<String> response = Unirest.post("https://petstore.swagger.io/v2/store/order")
+      .header("Content-Type", "application/json")
+      .header("Authorization", "ApiKey YOUR_API_KEY")
+      .body("{\"id\":10,\"petId\":198772,\"quantity\":1,\"shipDate\":\"2025-08-16T15:00:00Z\",\"status\":\"placed\",\"complete\":false}")
+      .asString();

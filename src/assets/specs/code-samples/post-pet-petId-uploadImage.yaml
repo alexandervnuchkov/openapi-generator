@@ -1,0 +1,60 @@
+- lang: shell
+  label: 'cURL'
+  source: |
+    curl -X POST 'https://petstore.swagger.io/v2/pet/10/uploadImage' \
+         -H 'Content-Type: multipart/form-data' \
+         -H 'Authorization: ApiKey YOUR_API_KEY' \
+         -F 'additionalMetadata=Sample metadata' \
+         -F 'file=@/path/to/file.jpg'
+
+- lang: python
+  label: 'Python: Requests'
+  source: |
+    import requests
+
+    url = "https://petstore.swagger.io/v2/pet/10/uploadImage"
+    headers = {
+      'Authorization': 'ApiKey YOUR_API_KEY'
+    }
+    files = {
+      'file': open('/path/to/file.jpg', 'rb')
+    }
+    data = {
+      'additionalMetadata': 'Sample metadata'
+    }
+    response = requests.post(url, headers=headers, files=files, data=data)
+
+    print(response.text)
+
+- lang: js
+  label: 'Nodejs'
+  source: |
+    var request = require('request');
+    var fs = require('fs');
+
+    var options = {
+      'method': 'POST',
+      'url': 'https://petstore.swagger.io/v2/pet/10/uploadImage',
+      'headers': {
+        'Authorization': 'ApiKey YOUR_API_KEY'
+      },
+      formData: {
+        'additionalMetadata': 'Sample metadata',
+        'file': fs.createReadStream('/path/to/file.jpg')
+      }
+    };
+
+    request(options, function (error, response) {
+      if (error) throw new Error(error);
+      console.log(response.body);
+    });
+
+- lang: java
+  label: Java
+  source: |
+    Unirest.setTimeouts(0, 0);
+    HttpResponse<String> response = Unirest.post("https://petstore.swagger.io/v2/pet/10/uploadImage")
+      .header("Authorization", "ApiKey YOUR_API_KEY")
+      .field("additionalMetadata", "Sample metadata")
+      .field("file", new File("/path/to/file.jpg"))
+      .asString();
