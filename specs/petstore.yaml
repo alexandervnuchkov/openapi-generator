@@ -85,7 +85,7 @@ paths:
       tags:
         - pet
       summary: Найти питомцев по статусу
-      description: 'Возвращает список питомцев по указанным статусам. Допустимые статусы: available, pending, sold'
+      description: 'Возвращает список питомцев по указанным статусам. Допустимые статусы: `available`, `pending`, `sold`.'
       operationId: findPetsByStatus
       x-code-samples:
         $ref: ./code-samples/get-pet-findByStatus.yaml
@@ -170,7 +170,7 @@ paths:
       tags:
         - pet
       summary: Найти питомца по ID
-      description: 'Возвращает данные одного питомца по его уникальному идентификатору'
+      description: 'Возвращает данные одного питомца по его уникальному идентификатору.'
       operationId: getPetById
       x-code-samples:
         $ref: ./code-samples/get-pet-petId.yaml
@@ -202,7 +202,7 @@ paths:
       tags:
         - pet
       summary: Обновить питомца через форму
-      description: 'Обновляет имя и статус питомца с помощью данных формы'
+      description: 'Обновляет имя и статус питомца с помощью данных формы.'
       operationId: updatePetWithForm
       x-code-samples:
         $ref: ./code-samples/post-pet-petId.yaml
@@ -272,7 +272,7 @@ paths:
       tags:
         - pet
       summary: Загрузить изображение
-      description: 'Загружает изображение для указанного питомца'
+      description: 'Загружает изображение для указанного питомца.'
       operationId: uploadFile
       x-code-samples:
         $ref: ./code-samples/post-pet-petId-uploadImage.yaml
@@ -313,7 +313,7 @@ paths:
       tags:
         - store
       summary: Получить инвентарь по статусам
-      description: 'Возвращает количество питомцев по каждому статусу (только для администраторов)'
+      description: 'Возвращает количество питомцев по каждому статусу (только для администраторов).'
       operationId: getInventory
       responses:
         '200':
@@ -335,7 +335,7 @@ paths:
       tags:
         - store
       summary: Создать заказ на питомца
-      description: 'Размещает новый заказ на покупку питомца'
+      description: 'Размещает новый заказ на покупку питомца.'
       operationId: placeOrder
       x-code-samples:
         $ref: ./code-samples/post-store-order.yaml
@@ -370,7 +370,7 @@ paths:
       tags:
         - store
       summary: Найти заказ по ID
-      description: 'Возвращает данные заказа по его идентификатору. Допустимые ID: от 1 до 10'
+      description: 'Возвращает данные заказа по его идентификатору. Допустимые ID: от `1` до `10`.'
       operationId: getOrderById
       x-code-samples:
         $ref: ./code-samples/get-store-order-orderId.yaml
@@ -402,7 +402,7 @@ paths:
       tags:
         - store
       summary: Удалить заказ по ID
-      description: 'Удаляет заказ по его идентификатору. Допустимы только положительные целые числа'
+      description: 'Удаляет заказ по его идентификатору. Допустимы только положительные целые числа.'
       operationId: deleteOrder
       x-code-samples:
         $ref: ./code-samples/delete-store-order-orderId.yaml
@@ -487,18 +487,22 @@ components:
           type: integer
           format: int64
           description: Уникальный идентификатор заказа
+          example: 10
         petId:
           type: integer
           format: int64
           description: Идентификатор заказанного питомца
+          example: 198772
         quantity:
           type: integer
           format: int32
           description: Количество заказанных единиц
+          example: 1
         shipDate:
           type: string
           format: date-time
           description: Дата и время отправки заказа
+          example: "2025-08-16T15:00:00Z"
         status:
           type: string
           description: Статус заказа
@@ -506,10 +510,12 @@ components:
             - placed
             - approved
             - delivered
+          example: "placed"
         complete:
           type: boolean
           default: false
           description: Флаг завершенности заказа
+          example: false
       xml:
         name: Order
     User:
@@ -519,28 +525,36 @@ components:
           type: integer
           format: int64
           description: Уникальный идентификатор пользователя
+          example: 1
         username:
           type: string
           description: Логин пользователя
+          example: "john_doe"
         firstName:
           type: string
           description: Имя пользователя
+          example: "John"
         lastName:
           type: string
           description: Фамилия пользователя
+          example: "Doe"
         email:
           type: string
           description: Email пользователя
+          example: "john@example.com"
         password:
           type: string
           description: Пароль пользователя
+          example: "password123"
         phone:
           type: string
           description: Телефон пользователя
+          example: "+1234567890"
         userStatus:
           type: integer
           format: int32
           description: Статус пользователя (1-активный, 0-неактивный)
+          example: 1
       xml:
         name: User
     Category:
@@ -549,9 +563,11 @@ components:
         id:
           type: integer
           format: int64
+          example: 1
         name:
           type: string
           description: Название категории
+          example: "Dogs"
       xml:
         name: Category
     Tag:
@@ -574,12 +590,13 @@ components:
           type: integer
           format: int64
           description: Уникальный идентификатор питомца
+          example: 1
         category:
           $ref: '#/components/schemas/Category'
           description: Категория питомца
         name:
           type: string
-          example: doggie
+          example: "doggie"
           description: Имя питомца
         photoUrls:
           type: array
@@ -589,6 +606,7 @@ components:
           items:
             type: string
           description: Ссылки на фотографии питомца
+          example: ["http://example.com/photo1.jpg", "http://example.com/photo2.jpg"]
         tags:
           type: array
           xml:
@@ -604,6 +622,7 @@ components:
             - available
             - pending
             - sold
+          example: "available"
       xml:
         name: Pet
     Inventory:
@@ -614,14 +633,17 @@ components:
           type: integer
           format: int32
           description: Количество доступных питомцев
+          example: 5
         pending:
           type: integer
           format: int32
           description: Количество ожидающих питомцев
+          example: 2
         sold:
           type: integer
           format: int32
           description: Количество проданных питомцев
+          example: 10
     ApiResponse:
       type: object
       description: Ответ API
@@ -630,12 +652,15 @@ components:
           type: integer
           format: int32
           description: Код ответа
+          example: 200
         type:
           type: string
           description: Тип ответа
+          example: "success"
         message:
           type: string
           description: Сообщение ответа
+          example: "Operation successful"
   examples:
     Order:
       value:
