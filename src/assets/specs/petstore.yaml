@@ -85,7 +85,7 @@ paths:
       tags:
         - pet
       summary: Найти питомцев по статусу
-      description: 'Возвращает список питомцев по указанным статусам. Допустимые статусы: available, pending, sold'
+      description: 'Возвращает список питомцев по указанным статусам. Допустимые статусы: `available`, `pending`, `sold`.'
       operationId: findPetsByStatus
       x-code-samples:
         $ref: ./code-samples/get-pet-findByStatus.yaml
@@ -170,7 +170,7 @@ paths:
       tags:
         - pet
       summary: Найти питомца по ID
-      description: 'Возвращает данные одного питомца по его уникальному идентификатору'
+      description: 'Возвращает данные одного питомца по его уникальному идентификатору.'
       operationId: getPetById
       x-code-samples:
         $ref: ./code-samples/get-pet-petId.yaml
@@ -202,7 +202,7 @@ paths:
       tags:
         - pet
       summary: Обновить питомца через форму
-      description: 'Обновляет имя и статус питомца с помощью данных формы'
+      description: 'Обновляет имя и статус питомца с помощью данных формы.'
       operationId: updatePetWithForm
       x-code-samples:
         $ref: ./code-samples/post-pet-petId.yaml
@@ -272,7 +272,7 @@ paths:
       tags:
         - pet
       summary: Загрузить изображение
-      description: 'Загружает изображение для указанного питомца'
+      description: 'Загружает изображение для указанного питомца.'
       operationId: uploadFile
       x-code-samples:
         $ref: ./code-samples/post-pet-petId-uploadImage.yaml
@@ -313,7 +313,7 @@ paths:
       tags:
         - store
       summary: Получить инвентарь по статусам
-      description: 'Возвращает количество питомцев по каждому статусу (только для администраторов)'
+      description: 'Возвращает количество питомцев по каждому статусу (только для администраторов).'
       operationId: getInventory
       responses:
         '200':
@@ -335,7 +335,7 @@ paths:
       tags:
         - store
       summary: Создать заказ на питомца
-      description: 'Размещает новый заказ на покупку питомца'
+      description: 'Размещает новый заказ на покупку питомца.'
       operationId: placeOrder
       x-code-samples:
         $ref: ./code-samples/post-store-order.yaml
@@ -370,7 +370,7 @@ paths:
       tags:
         - store
       summary: Найти заказ по ID
-      description: 'Возвращает данные заказа по его идентификатору. Допустимые ID: от 1 до 10'
+      description: 'Возвращает данные заказа по его идентификатору. Допустимые ID: от `1` до `10`.'
       operationId: getOrderById
       x-code-samples:
         $ref: ./code-samples/get-store-order-orderId.yaml
@@ -402,7 +402,7 @@ paths:
       tags:
         - store
       summary: Удалить заказ по ID
-      description: 'Удаляет заказ по его идентификатору. Допустимы только положительные целые числа'
+      description: 'Удаляет заказ по его идентификатору. Допустимы только положительные целые числа.'
       operationId: deleteOrder
       x-code-samples:
         $ref: ./code-samples/delete-store-order-orderId.yaml
