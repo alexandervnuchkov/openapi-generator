@@ -1,0 +1,59 @@
+- lang: shell
+  label: 'cURL'
+  source: |
+    curl -X POST 'https://petstore.swagger.io/v2/pet/10' \
+         -H 'Content-Type: application/x-www-form-urlencoded' \
+         -H 'Authorization: ApiKey YOUR_API_KEY' \
+         -d 'name=UpdatedName&status=sold'
+
+- lang: python
+  label: 'Python: Requests'
+  source: |
+    import requests
+
+    url = "https://petstore.swagger.io/v2/pet/10"
+    headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'ApiKey YOUR_API_KEY'
+    }
+    data = {
+      'name': 'UpdatedName',
+      'status': 'sold'
+    }
+    response = requests.post(url, headers=headers, data=data)
+
+    print(response.text)
+
+- lang: js
+  label: 'Nodejs'
+  source: |
+    var request = require('request');
+
+    var options = {
+      'method': 'POST',
+      'url': 'https://petstore.swagger.io/v2/pet/10',
+      'headers': {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'ApiKey YOUR_API_KEY'
+      },
+      form: {
+        'name': 'UpdatedName',
+        'status': 'sold'
+      }
+    };
+
+    request(options, function (error, response) {
+      if (error) throw new Error(error);
+      console.log(response.body);
+    });
+
+- lang: java
+  label: Java
+  source: |
+    Unirest.setTimeouts(0, 0);
+    HttpResponse<String> response = Unirest.post("https://petstore.swagger.io/v2/pet/10")
+      .header("Content-Type", "application/x-www-form-urlencoded")
+      .header("Authorization", "ApiKey YOUR_API_KEY")
+      .field("name", "UpdatedName")
+      .field("status", "sold")
+      .asString();
