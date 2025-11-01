@@ -65,7 +65,7 @@
     "eslint-plugin-import": "^2.27.5",
     "eslint-webpack-plugin": "4.0.1",
     "file-loader": "^6.2.0",
-    "filemanager-webpack-plugin": "^8.0.0",
+    "filemanager-webpack-plugin": "^9.0.1",
     "html-webpack-plugin": "^5.5.3",
     "inspectpack": "^4.7.1",
     "minify-template-literal-loader": "^0.0.3",
